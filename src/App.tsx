@@ -1,8 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Leva, useControls } from 'leva'
-import { OrbitControls } from '@react-three/drei'
-import { Stage } from '@o3s/lib'
-import { registry } from './gallery/registry'
+import { Stage, CameraRig, useInputMode, setInputMode, toggleInputMode } from '@o3s/lib'
+import { registry, type Family } from './gallery/registry'
 import { levaTheme } from './gallery/levaTheme'
 
 /**
@@ -21,7 +20,39 @@ export default function App() {
   // Keyed by id so switching components rebuilds the panel.
   const values = useControls(active.name, active.controls as never, [active.id])
 
-  const categories = Array.from(new Set(registry.map((e) => e.category)))
+  // Canonical 6-family order; only show families that have entries.
+  const FAMILY_ORDER: Family[] = [
+    'InteractiveSurface',
+    'ParticleField',
+    'InstancedGrid',
+    'FloatingObject',
+    'ScrollScene',
+    'PostFX',
+  ]
+  const families = FAMILY_ORDER.filter((f) => registry.some((e) => e.family === f))
+
+  const mode = useInputMode()
+
+  // Keyboard shortcut: hold Space (or press V) to flip to View, release to Interact.
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && !e.repeat) {
+        e.preventDefault()
+        setInputMode('view')
+      } else if (e.key === 'v' || e.key === 'V') {
+        toggleInputMode()
+      }
+    }
+    const up = (e: KeyboardEvent) => {
+      if (e.code === 'Space') setInputMode('interact')
+    }
+    window.addEventListener('keydown', down)
+    window.addEventListener('keyup', up)
+    return () => {
+      window.removeEventListener('keydown', down)
+      window.removeEventListener('keyup', up)
+    }
+  }, [])
 
   return (
     <div className="app">
@@ -29,7 +60,10 @@ export default function App() {
       <div className="stage-layer">
         <Stage background={null}>
           {active.render(values as Record<string, unknown>)}
-          {!active.noOrbit && <OrbitControls makeDefault enableDamping />}
+          {/* Camera is a SEPARATE entity, not part of any effect. It only
+              responds in View mode, so it never fights cursor-bound effects.
+              Present on every effect — you can always orbit the view. */}
+          <CameraRig />
         </Stage>
       </div>
 
@@ -44,18 +78,18 @@ export default function App() {
         </div>
 
         <nav className="nav">
-          {categories.map((cat) => (
-            <div key={cat} className="cat">
-              <h3>{cat}</h3>
+          {families.map((fam) => (
+            <div key={fam} className="cat">
+              <h3>{fam}</h3>
               {registry
-                .filter((e) => e.category === cat)
+                .filter((e) => e.family === fam)
                 .map((e) => (
                   <button
                     key={e.id}
                     className={e.id === activeId ? 'item active' : 'item'}
                     onClick={() => setActiveId(e.id)}
                   >
-                    <span className="dot" />
+                    <span className={`dot diff-${e.difficulty}`} />
                     {e.name}
                   </button>
                 ))}
@@ -63,15 +97,33 @@ export default function App() {
           ))}
         </nav>
 
-        <footer>{registry.length} components</footer>
+        <footer>{registry.length} effects · 6 families</footer>
       </aside>
 
       {/* Floating glass header */}
       <header className="preview-header glass">
-        <span className="chip">{active.category}</span>
+        <span className="chip">{active.family}</span>
+        <span className={`chip diff diff-${active.difficulty}`}>{active.difficulty}</span>
         <h2>{active.name}</h2>
         <p>{active.description}</p>
       </header>
+
+      {/* Mode toggle — camera vs. effect input. Present on every effect. */}
+      <div className="mode-toggle glass" role="group" aria-label="Input mode">
+        <button
+          className={mode === 'interact' ? 'mode active' : 'mode'}
+          onClick={() => setInputMode('interact')}
+        >
+          Interact
+        </button>
+        <button
+          className={mode === 'view' ? 'mode active' : 'mode'}
+          onClick={() => setInputMode('view')}
+        >
+          View
+        </button>
+        <span className="hint">hold Space to orbit</span>
+      </div>
 
       {/* leva, themed to match the glass */}
       <Leva theme={levaTheme} titleBar={{ title: 'Controls' }} />
