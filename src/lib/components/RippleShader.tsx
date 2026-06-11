@@ -1,6 +1,6 @@
-import { useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Color, ShaderMaterial, Vector2 } from 'three'
+import { Color, Vector2 } from 'three'
 import { useMouse } from '../hooks/useMouse'
 
 export interface RippleShaderProps {
@@ -53,9 +53,13 @@ export function RippleShader({
   frequency = 40,
   speed = 2,
 }: RippleShaderProps) {
-  const matRef = useRef<ShaderMaterial>(null)
   const mouse = useMouse(0.08)
 
+  // Create the uniforms object EXACTLY ONCE. Recreating it when props change
+  // (e.g. via a useMemo on [frequency, colors]) hands the material a new object
+  // mid-flight — three.js keeps the old one, useFrame mutates the new one, and
+  // the shader either freezes or reads an undefined uniform and throws. So we
+  // build it once and only ever mutate `.value` fields below.
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
@@ -64,22 +68,24 @@ export function RippleShader({
       uColorA: { value: new Color(colorA) },
       uColorB: { value: new Color(colorB) },
     }),
-    // Recreate only when colors/frequency change; uTime/uMouse mutate in-place.
-    [colorA, colorB, frequency],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
   )
 
-  useFrame((state, delta) => {
-    if (!matRef.current) return
+  // Push the live props into the stable uniform objects every frame. This is
+  // what actually makes the leva controls update the shader without rebuilds.
+  useFrame((_, delta) => {
     uniforms.uTime.value += delta * speed
+    uniforms.uFrequency.value = frequency
     uniforms.uMouse.value.copy(mouse.current)
-    void state
+    uniforms.uColorA.value.set(colorA)
+    uniforms.uColorB.value.set(colorB)
   })
 
   return (
     <mesh>
       <planeGeometry args={[10, 10, 1, 1]} />
       <shaderMaterial
-        ref={matRef}
         vertexShader={vertex}
         fragmentShader={fragment}
         uniforms={uniforms}

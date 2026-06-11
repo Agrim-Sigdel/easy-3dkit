@@ -1,15 +1,17 @@
 import { useState } from 'react'
-import { useControls } from 'leva'
+import { Leva, useControls } from 'leva'
 import { OrbitControls } from '@react-three/drei'
 import { Stage } from '@o3s/lib'
 import { registry } from './gallery/registry'
+import { levaTheme } from './gallery/levaTheme'
 
 /**
- * Gallery shell (Layer 4).
+ * Gallery shell (Layer 4) — glassmorphism.
  *
- * Left: a categorized list of every registered component.
- * Right: a live <Stage> rendering the selected one, with a leva panel
- * (top-right) wired to that component's `controls` schema.
+ * The <Stage> is full-bleed in the background; every panel (sidebar, header,
+ * leva) floats on top as a frosted-glass surface that blurs the live 3D scene
+ * behind it. That "blur what's behind" is what makes glassmorphism read as
+ * glass rather than just a translucent box.
  */
 export default function App() {
   const [activeId, setActiveId] = useState(registry[0].id)
@@ -23,40 +25,56 @@ export default function App() {
 
   return (
     <div className="app">
-      <aside className="sidebar">
-        <div className="brand">
-          <span className="logo">O3S</span>
-          <span className="tagline">3d-kit</span>
-        </div>
-        {categories.map((cat) => (
-          <div key={cat} className="cat">
-            <h3>{cat}</h3>
-            {registry
-              .filter((e) => e.category === cat)
-              .map((e) => (
-                <button
-                  key={e.id}
-                  className={e.id === activeId ? 'item active' : 'item'}
-                  onClick={() => setActiveId(e.id)}
-                >
-                  {e.name}
-                </button>
-              ))}
-          </div>
-        ))}
-        <footer>{registry.length} components</footer>
-      </aside>
-
-      <main className="stage-wrap">
-        <header className="preview-header">
-          <h2>{active.name}</h2>
-          <p>{active.description}</p>
-        </header>
-        <Stage>
+      {/* Full-bleed live scene — the thing every glass panel blurs. */}
+      <div className="stage-layer">
+        <Stage background={null}>
           {active.render(values as Record<string, unknown>)}
           {!active.noOrbit && <OrbitControls makeDefault enableDamping />}
         </Stage>
-      </main>
+      </div>
+
+      {/* Ambient color wash behind the glass, for depth. */}
+      <div className="ambient" aria-hidden />
+
+      {/* Floating glass sidebar */}
+      <aside className="sidebar glass">
+        <div className="brand">
+          <span className="logo">O3S</span>
+          <span className="tagline">3d&#8202;kit</span>
+        </div>
+
+        <nav className="nav">
+          {categories.map((cat) => (
+            <div key={cat} className="cat">
+              <h3>{cat}</h3>
+              {registry
+                .filter((e) => e.category === cat)
+                .map((e) => (
+                  <button
+                    key={e.id}
+                    className={e.id === activeId ? 'item active' : 'item'}
+                    onClick={() => setActiveId(e.id)}
+                  >
+                    <span className="dot" />
+                    {e.name}
+                  </button>
+                ))}
+            </div>
+          ))}
+        </nav>
+
+        <footer>{registry.length} components</footer>
+      </aside>
+
+      {/* Floating glass header */}
+      <header className="preview-header glass">
+        <span className="chip">{active.category}</span>
+        <h2>{active.name}</h2>
+        <p>{active.description}</p>
+      </header>
+
+      {/* leva, themed to match the glass */}
+      <Leva theme={levaTheme} titleBar={{ title: 'Controls' }} />
     </div>
   )
 }
