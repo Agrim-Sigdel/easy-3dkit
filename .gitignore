@@ -6,3 +6,18 @@ dist-ssr
 .vite
 *.log
 *.tsbuildinfo
+
+# Packed npm tarballs (produced by `npm pack`)
+*.tgz
+
+# Stray probe / scratch dirs that have accidentally landed at the repo root
+/tmp/
+/var/
+probe/
+o3s-probe/
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+Thumbs.db

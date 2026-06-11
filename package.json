@@ -1,33 +1,85 @@
 {
-  "name": "o3s",
-  "private": true,
-  "version": "0.0.1",
-  "description": "O3S / 3d-kit — a reusable library of interactive 3D components (R3F + three.js + GSAP)",
+  "name": "easy-3dkit",
+  "version": "0.1.0",
+  "description": "A reusable library of interactive 3D components for React (R3F + three.js + GSAP)",
   "type": "module",
+  "license": "MIT",
+  "author": "Agrim-Sigdel",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Agrim-Sigdel/3d-kit.git"
+  },
+  "homepage": "https://github.com/Agrim-Sigdel/3d-kit#readme",
+  "bugs": {
+    "url": "https://github.com/Agrim-Sigdel/3d-kit/issues"
+  },
+  "keywords": [
+    "react",
+    "three",
+    "r3f",
+    "react-three-fiber",
+    "3d",
+    "ui-kit",
+    "shaders",
+    "webgl",
+    "gsap"
+  ],
+  "sideEffects": false,
+  "main": "./dist/easy-3dkit.js",
+  "module": "./dist/easy-3dkit.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/easy-3dkit.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "build:lib": "vite build --config vite.lib.config.ts",
+    "build:types": "tsc -p tsconfig.lib.json",
+    "build:pkg": "npm run build:lib && npm run build:types",
+    "prepublishOnly": "npm run build:pkg"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@react-three/drei": ">=9.114.0",
+    "@react-three/fiber": ">=8.17.10",
+    "@react-three/postprocessing": ">=2.16.3",
+    "gsap": ">=3.12.5",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "three": ">=0.169.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-three/postprocessing": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
     "@react-three/drei": "^9.114.0",
     "@react-three/fiber": "^8.17.10",
     "@react-three/postprocessing": "^2.16.3",
-    "gsap": "^3.12.5",
-    "leva": "^0.9.35",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
-    "three": "^0.169.0"
-  },
-  "devDependencies": {
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.169.0",
     "@vitejs/plugin-react": "^4.3.2",
+    "gsap": "^3.12.5",
+    "leva": "^0.9.35",
     "puppeteer-core": "^25.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "three": "^0.169.0",
     "typescript": "^5.6.2",
     "vite": "^5.4.8"
   }
