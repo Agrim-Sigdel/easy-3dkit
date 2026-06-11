@@ -1,0 +1,113 @@
+:root {
+  --bg: #0a0a0f;
+  --panel: #14141c;
+  --line: #23232e;
+  --text: #e6e6ef;
+  --muted: #8b8b9c;
+  --accent: #5fa8ff;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+  padding: 18px 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.logo {
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.tagline {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cat h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin: 16px 0 6px;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.item:hover {
+  background: #1d1d28;
+}
+.item.active {
+  background: #1d2740;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.sidebar footer {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Stage */
+.stage-wrap {
+  position: relative;
+}
+.preview-header {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  z-index: 10;
+  pointer-events: none;
+  max-width: 60%;
+}
+.preview-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.preview-header p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
