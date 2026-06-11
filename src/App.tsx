@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Leva, useControls } from 'leva'
 import {
   Stage,
@@ -141,7 +142,12 @@ export default function App() {
           ))}
         </nav>
 
-        <footer>{registry.length} effects · 6 families</footer>
+        <footer>
+          {registry.length} effects · 6 families
+          <Link className="demo-link" to="/studio">
+            Demo site: Novaforge
+          </Link>
+        </footer>
       </aside>
 
       {/* Floating glass header */}

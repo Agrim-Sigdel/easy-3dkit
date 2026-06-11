@@ -195,6 +195,15 @@ body,
   color: var(--muted);
   text-align: center;
 }
+.sidebar footer .demo-link {
+  display: block;
+  margin-top: 8px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.sidebar footer .demo-link:hover {
+  text-shadow: 0 0 12px var(--accent);
+}
 
 /* ── Header ────────────────────────────────────────────────────── */
 

@@ -1,0 +1,814 @@
+/* Novaforge Interactive — ember accent over paper (light) or graphite (dark).
+ *
+ * Theming: light is the default token set on .studio; [data-theme='dark']
+ * overrides the same custom properties, including the shared glass tokens,
+ * so every component below is written once against variables.
+ * Typography: Space Grotesk for display, system sans for body. Sentence case,
+ * tight tracking, no gradient text, no glow shadows.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* The gallery locks the document; this route needs a real scrolling page. */
+html.studio-scroll,
+html.studio-scroll body,
+html.studio-scroll #root {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+html.studio-scroll {
+  scroll-behavior: smooth;
+  background: #f4f2ec;
+}
+
+.studio {
+  /* Light (default) */
+  --nf-bg: #f4f2ec;
+  --nf-text: #1a1c20;
+  --nf-muted: #5d646f;
+  --nf-ember: #e85a2a;
+  --nf-ember-soft: rgba(232, 90, 42, 0.12);
+  --nf-on-ember: #ffffff;
+  --nf-steel: #5d6b80;
+  --nf-veil: rgba(244, 242, 236, 0.85);
+  --nf-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(26, 28, 32, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.65);
+  --glass-shadow: 0 8px 30px rgba(26, 28, 32, 0.1);
+
+  position: relative;
+  color: var(--nf-text);
+  background: var(--nf-bg);
+  min-height: 100vh;
+}
+
+.studio[data-theme='dark'] {
+  --nf-bg: #0a0b0d;
+  --nf-text: #ecebe6;
+  --nf-muted: #9298a3;
+  --nf-ember: #ff6b3d;
+  --nf-ember-soft: rgba(255, 107, 61, 0.12);
+  --nf-on-ember: #16100c;
+  --nf-steel: #aab4c4;
+  --nf-veil: rgba(10, 11, 13, 0.8);
+
+  --glass-bg: rgba(18, 20, 32, 0.42);
+  --glass-bg-strong: rgba(18, 20, 32, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.06);
+  --glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Fixed 3D layer + readability scrim ───────────────────────── */
+
+.studio-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+/* Scene swap: the canvas dissolves through the page background. */
+.studio-backdrop.is-fading {
+  opacity: 0;
+}
+
+.studio-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--nf-bg) 78%, transparent),
+      transparent 22%,
+      transparent 78%,
+      color-mix(in srgb, var(--nf-bg) 82%, transparent)
+    ),
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, color-mix(in srgb, var(--nf-bg) 55%, transparent));
+}
+
+main {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Entrance transitions (scroll-reveal) ─────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+/* Stagger helpers for groups that enter together. */
+.reveal.d1 {
+  transition-delay: 0.08s;
+}
+.reveal.d2 {
+  transition-delay: 0.16s;
+}
+.reveal.d3 {
+  transition-delay: 0.24s;
+}
+.pillars .pillar:nth-child(2),
+.roles .role:nth-child(2) {
+  transition-delay: 0.08s;
+}
+.pillars .pillar:nth-child(3),
+.roles .role:nth-child(3) {
+  transition-delay: 0.16s;
+}
+.roles .role:nth-child(4) {
+  transition-delay: 0.24s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.studio-scroll {
+    scroll-behavior: auto;
+  }
+  .studio-backdrop {
+    transition: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Nav ───────────────────────────────────────────────────────── */
+
+.studio-nav {
+  position: fixed;
+  z-index: 50;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 22px;
+  border-radius: 99px;
+  white-space: nowrap;
+  max-width: calc(100vw - 24px);
+}
+
+.nav-brand {
+  font-family: var(--nf-display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.3px;
+  color: var(--nf-text);
+  text-decoration: none;
+}
+.mark-dot {
+  color: var(--nf-ember);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar {
+  display: none;
+}
+.nav-links a {
+  color: var(--nf-muted);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: color 0.16s ease;
+}
+.nav-links a:hover {
+  color: var(--nf-text);
+}
+
+.theme-toggle {
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--nf-muted);
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  padding: 5px 12px;
+  border-radius: 99px;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+.theme-toggle:hover {
+  color: var(--nf-text);
+  border-color: var(--nf-muted);
+}
+
+.nav-kit {
+  font-size: 11.5px;
+  color: var(--nf-steel);
+  text-decoration: none;
+  border: 1px solid var(--glass-border);
+  background: color-mix(in srgb, var(--nf-steel) 8%, transparent);
+  padding: 5px 12px;
+  border-radius: 99px;
+  letter-spacing: 0.4px;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+.nav-kit:hover {
+  color: var(--nf-text);
+  border-color: var(--nf-steel);
+}
+
+/* ── Shared typography / buttons ──────────────────────────────── */
+
+.kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--nf-ember);
+  margin: 0 0 14px;
+}
+
+.section-head {
+  max-width: 720px;
+  margin: 0 auto 64px;
+  text-align: center;
+  padding: 0 24px;
+}
+.section-head h2 {
+  font-family: var(--nf-display);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+.section-sub {
+  color: var(--nf-muted);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 16px auto 0;
+  max-width: 560px;
+}
+
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  padding: 12px 26px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease, filter 0.2s ease, border-color 0.2s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  color: var(--nf-on-ember);
+  background: var(--nf-ember);
+  border: none;
+}
+.btn-primary:hover {
+  filter: brightness(1.08);
+}
+.btn-ghost {
+  color: var(--nf-text);
+  background: color-mix(in srgb, var(--nf-text) 4%, transparent);
+  border: 1px solid var(--glass-border);
+}
+.btn-ghost:hover {
+  border-color: var(--nf-muted);
+}
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  padding: 140px clamp(24px, 9vw, 140px) 90px;
+}
+/* Soft pool behind the headline so it stays readable over the rain. */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 20% 28% 16% -6%;
+  background: radial-gradient(58% 58% at 34% 46%, var(--nf-veil), transparent 72%);
+  pointer-events: none;
+}
+.hero > * {
+  position: relative;
+}
+
+.hero h1 {
+  font-family: var(--nf-display);
+  font-size: clamp(38px, 6.5vw, 76px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -2px;
+  margin: 0;
+  color: var(--nf-text);
+}
+
+.hero-sub {
+  max-width: 540px;
+  color: var(--nf-muted);
+  font-size: 17px;
+  line-height: 1.65;
+  margin: 26px 0 36px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Game shortcut chips: a direct path into the content from the first screen. */
+.hero-games {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 48px;
+}
+.hero-game {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-decoration: none;
+  padding: 13px 18px;
+  border-radius: 14px;
+  transition: transform 0.16s ease, border-color 0.16s ease;
+}
+.hero-game:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--nf-ember) 45%, transparent);
+}
+.hero-game-title {
+  font-family: var(--nf-display);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--nf-text);
+}
+.hero-game-meta {
+  font-size: 11.5px;
+  letter-spacing: 0.4px;
+  color: var(--nf-muted);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--nf-muted);
+}
+.scroll-hint span {
+  display: block;
+  width: 1px;
+  height: 38px;
+  background: linear-gradient(to bottom, transparent, var(--nf-ember));
+  animation: hint-drop 1.8s ease-in-out infinite;
+}
+@keyframes hint-drop {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* ── Games ─────────────────────────────────────────────────────── */
+
+.games {
+  padding: 14vh 24px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9vh;
+}
+
+.game-card {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.game-card:nth-child(even) {
+  direction: rtl;
+}
+.game-card:nth-child(even) > * {
+  direction: ltr;
+}
+
+.game-visual {
+  position: relative;
+  min-height: 380px;
+}
+.game-visual canvas {
+  position: absolute !important;
+  inset: 0;
+}
+.game-index {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  font-family: var(--nf-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--nf-text);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong);
+  padding: 4px 10px;
+  border-radius: 99px;
+  backdrop-filter: blur(6px);
+}
+
+.game-info {
+  padding: 44px 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.game-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.pill {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--nf-muted);
+  border: 1px solid var(--glass-border);
+  padding: 4px 11px;
+  border-radius: 99px;
+}
+.pill-status {
+  color: var(--nf-ember);
+  border-color: color-mix(in srgb, var(--nf-ember) 40%, transparent);
+  background: var(--nf-ember-soft);
+}
+
+.game-card h3 {
+  font-family: var(--nf-display);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  margin: 0 0 8px;
+}
+.game-tagline {
+  color: var(--nf-text);
+  font-size: 15.5px;
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+.game-desc {
+  color: var(--nf-muted);
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 0 26px;
+}
+.game-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── Universe ──────────────────────────────────────────────────── */
+
+.universe {
+  padding: 20vh 0 24vh;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* Horizontal snap rail of lore cards over the galaxy. */
+.lore-rail-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+}
+
+.lore-rail {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 10px 6px 22px;
+  scrollbar-width: none;
+  flex: 1;
+}
+.lore-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.lore-card {
+  flex: 0 0 min(400px, 82vw);
+  scroll-snap-align: center;
+  padding: 30px 32px;
+}
+.lore-card h3 {
+  font-family: var(--nf-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  margin: 0 0 12px;
+}
+.lore-card p {
+  color: var(--nf-muted);
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0;
+}
+.lore-card .kicker {
+  margin-bottom: 10px;
+}
+
+.rail-btn {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 99px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong);
+  color: var(--nf-text);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.16s ease, transform 0.16s ease;
+}
+.rail-btn:hover {
+  border-color: var(--nf-ember);
+  transform: scale(1.05);
+}
+
+/* ── Tech ──────────────────────────────────────────────────────── */
+
+.tech {
+  padding: 16vh 24px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.pillar {
+  padding: 30px 28px;
+}
+.pillar-name {
+  font-family: var(--nf-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--nf-steel);
+}
+.pillar h3 {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin: 12px 0 10px;
+}
+.pillar p {
+  color: var(--nf-muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Careers ───────────────────────────────────────────────────── */
+
+.careers {
+  padding: 16vh 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.role {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 26px;
+}
+.role h3 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  margin: 0 0 4px;
+}
+.role p {
+  color: var(--nf-muted);
+  font-size: 13.5px;
+  margin: 0;
+}
+
+/* ── Footer ────────────────────────────────────────────────────── */
+
+.studio-footer {
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22vh 24px 28px;
+}
+
+.footer-cta {
+  text-align: center;
+}
+.footer-cta h2 {
+  font-family: var(--nf-display);
+  font-size: clamp(30px, 4.5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin: 0 0 14px;
+}
+.footer-cta p {
+  color: var(--nf-muted);
+  font-size: 16px;
+  margin: 0 0 28px;
+}
+
+.footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 22px;
+  margin-top: 12vh;
+}
+.footer-links {
+  display: flex;
+  gap: 18px;
+}
+.footer-links a {
+  color: var(--nf-muted);
+  text-decoration: none;
+  font-size: 13px;
+}
+.footer-links a:hover {
+  color: var(--nf-text);
+}
+.footer-note {
+  color: var(--nf-muted);
+  font-size: 12px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+
+@media (max-width: 920px) {
+  .nav-kit {
+    display: none;
+  }
+  .game-card,
+  .game-card:nth-child(even) {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+  .game-visual {
+    min-height: 280px;
+  }
+  .pillars {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .studio-nav {
+    left: 12px;
+    right: 12px;
+    transform: none;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 14px;
+  }
+  .nav-brand {
+    font-size: 15px;
+  }
+  .nav-links {
+    gap: 12px;
+  }
+  .nav-links a {
+    font-size: 12.5px;
+  }
+
+  .hero {
+    padding: 120px 22px 90px;
+  }
+  .hero h1 {
+    letter-spacing: -1px;
+  }
+  .hero::before {
+    inset: 14% 0;
+  }
+
+  .games,
+  .tech,
+  .careers {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .universe {
+    padding: 12vh 0 16vh;
+  }
+  .section-head {
+    margin-bottom: 44px;
+  }
+
+  .game-info {
+    padding: 26px 22px;
+  }
+  .game-visual {
+    min-height: 240px;
+  }
+  /* Touch scrolling replaces the arrows on small screens. */
+  .rail-btn {
+    display: none;
+  }
+  .lore-rail-wrap {
+    padding: 0 10px;
+  }
+  .lore-card {
+    padding: 26px 22px;
+  }
+  .hero-games {
+    margin-top: 36px;
+    width: 100%;
+  }
+  .hero-game {
+    flex: 1 1 100%;
+  }
+
+  .role {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .role .btn {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .studio-footer {
+    padding: 16vh 16px 24px;
+  }
+  .footer-bar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
