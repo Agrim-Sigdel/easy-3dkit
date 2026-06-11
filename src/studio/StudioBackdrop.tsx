@@ -222,7 +222,7 @@ export function StudioBackdrop({ band, theme }: { band: Band; theme: Theme }) {
         <ParticleField
           count={180000}
           radius={100}
-          distribution="cone"
+          distribution="shell"
           color={p.particleColor}
           size={0.014}
           glow={p.particleGlow}
