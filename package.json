@@ -46,6 +46,7 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "smoke": "node scripts/smoke.mjs",
+    "smoke:nogl": "node scripts/smoke-nogl.mjs",
     "docs:effects": "node scripts/gen-effects-docs.mjs",
     "build:lib": "vite build --config vite.lib.config.ts",
     "build:types": "tsc -p tsconfig.lib.json",

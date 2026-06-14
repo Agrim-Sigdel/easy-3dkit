@@ -74,7 +74,9 @@ export function ClayBackdrop({ theme }: { theme: ClayTheme }) {
   const g = GRADES[theme]
   return (
     <div className="clay-backdrop" aria-hidden>
-      <Stage background={null}>
+      {/* Decorative full-viewport layer: no fallback chip when WebGL is off —
+          the page content stands on its own (see StudioBackdrop). */}
+      <Stage background={null} fallback={null}>
         {/* Kiln dust drifting through the whole scene — continuity. */}
         <ParticleField
           count={9000}

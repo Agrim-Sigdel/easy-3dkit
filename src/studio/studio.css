@@ -298,6 +298,10 @@ main {
 .hero {
   position: relative;
   min-height: 100vh;
+  /* svh tracks the *visible* viewport, so the hero fills the screen exactly on
+     mobile where browser chrome makes 100vh overflow. Falls back to vh where
+     unsupported. */
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

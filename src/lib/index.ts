@@ -8,6 +8,11 @@
 // Engine (Layer 1)
 export { Stage } from './engine/Stage'
 export type { StageProps } from './engine/Stage'
+export { isWebGLAvailable } from './engine/webgl'
+export { WebGLErrorBoundary } from './engine/WebGLErrorBoundary'
+export type { WebGLErrorBoundaryProps } from './engine/WebGLErrorBoundary'
+export { WebGLFallback } from './engine/WebGLFallback'
+export type { WebGLFallbackProps } from './engine/WebGLFallback'
 export { CameraRig } from './engine/CameraRig'
 export type { CameraRigProps } from './engine/CameraRig'
 export {

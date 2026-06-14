@@ -1,7 +1,9 @@
 import puppeteer from "puppeteer-core"
 
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-const URL = process.env.SMOKE_URL || "http://localhost:5173/"
+// The gallery moved to /gallery in the route redesign; / is now the landing
+// page. Default at the gallery so `npm run smoke` exercises the effect list.
+const URL = process.env.SMOKE_URL || "http://localhost:5173/gallery"
 
 const browser = await puppeteer.launch({
   executablePath: CHROME,

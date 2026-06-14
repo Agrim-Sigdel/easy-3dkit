@@ -217,7 +217,11 @@ export function StudioBackdrop({ band, theme }: { band: Band; theme: Theme }) {
   const p = PALETTES[theme]
   return (
     <div className={fading ? 'studio-backdrop is-fading' : 'studio-backdrop'} aria-hidden>
-      <Stage background={null}>
+      {/* Decorative full-viewport layer: when WebGL is unavailable, render
+          nothing rather than the default "preview unavailable" chip — the page's
+          own copy carries the hero, and a message floating over it reads as
+          broken. The foreground content already degrades gracefully. */}
+      <Stage background={null} fallback={null}>
         {/* Ambient drifting particles shared by every band: continuity across swaps. */}
         <ParticleField
           count={180000}
