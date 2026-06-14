@@ -154,7 +154,7 @@ body,
 .brand {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 3px;
   padding: 0 6px 18px;
   margin-bottom: 6px;
   border-bottom: 1px solid var(--glass-border);
@@ -243,7 +243,7 @@ body,
 .logo {
   font-weight: 800;
   font-size: 24px;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.5px;
   background: linear-gradient(120deg, #fff, var(--accent));
   -webkit-background-clip: text;
   background-clip: text;

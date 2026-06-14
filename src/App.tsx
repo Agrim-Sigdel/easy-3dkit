@@ -444,8 +444,8 @@ export default function App() {
       {/* Floating glass sidebar — off-canvas drawer on mobile. */}
       <aside className={navOpen ? 'sidebar glass open' : 'sidebar glass'}>
         <div className="brand">
-          <span className="logo">O3S</span>
-          <span className="tagline">3d&#8202;kit</span>
+          <span className="logo">easy</span>
+          <span className="tagline">-3dkit</span>
           {/* Desktop-only collapse toggle. */}
           <button
             className="sidebar-collapse"

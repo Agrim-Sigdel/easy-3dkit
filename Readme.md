@@ -98,6 +98,21 @@ Ships with full type declarations. Every component exports its props type
 (`StageProps`, `InteractiveSurfaceProps`, `InstancedGridProps`, …) and layouts
 export their options types.
 
+## Bundle size & tree-shaking
+
+The package is marked `sideEffects: false`, so a bundler keeps only the effects
+you import. The 3D stack (`three`, `@react-three/*`, `gsap`) is peer-installed,
+so it is **not** part of these numbers — they are the library's own footprint.
+
+| Import | Minified | Gzipped |
+| --- | --- | --- |
+| `ParticleField` only | 57.7 KB | 17.3 KB |
+| `InteractiveSurface` + `glassmorphism` | 58.2 KB | 17.4 KB |
+| Whole library (`import *`) | 92.1 KB | 30.4 KB |
+
+A single-component import is roughly half the whole-library cost. Reproduce the
+numbers yourself with `pnpm build:pkg && pnpm measure:size`.
+
 ## License
 
 MIT © Agrim Sigdel

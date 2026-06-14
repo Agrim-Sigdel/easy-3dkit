@@ -7,11 +7,11 @@
   "author": "Agrim-Sigdel",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Agrim-Sigdel/3d-kit.git"
+    "url": "git+https://github.com/Agrim-Sigdel/easy-3dkit.git"
   },
-  "homepage": "https://github.com/Agrim-Sigdel/3d-kit#readme",
+  "homepage": "https://github.com/Agrim-Sigdel/easy-3dkit#readme",
   "bugs": {
-    "url": "https://github.com/Agrim-Sigdel/3d-kit/issues"
+    "url": "https://github.com/Agrim-Sigdel/easy-3dkit/issues"
   },
   "keywords": [
     "react",
@@ -40,17 +40,23 @@
   "engines": {
     "node": ">=18"
   },
+  "packageManager": "pnpm@10.20.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "smoke": "node scripts/smoke.mjs",
     "smoke:nogl": "node scripts/smoke-nogl.mjs",
     "docs:effects": "node scripts/gen-effects-docs.mjs",
     "build:lib": "vite build --config vite.lib.config.ts",
     "build:types": "tsc -p tsconfig.lib.json",
     "build:pkg": "npm run build:lib && npm run build:types",
+    "check:pack": "node scripts/check-pack.mjs",
+    "measure:size": "node scripts/measure-size.mjs",
+    "verify:dogfood": "O3S_USE_DIST=1 vite build",
     "prepublishOnly": "npm run build:pkg"
   },
   "peerDependencies": {
@@ -71,11 +77,14 @@
     "@react-three/drei": "^9.114.0",
     "@react-three/fiber": "^8.17.10",
     "@react-three/postprocessing": "^2.16.3",
+    "@react-three/test-renderer": "^8.2.4",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.169.0",
     "@vitejs/plugin-react": "^4.3.2",
+    "esbuild": "^0.28.1",
     "gsap": "^3.12.5",
+    "jsdom": "^29.1.1",
     "leva": "^0.9.35",
     "puppeteer-core": "^25.1.0",
     "react": "^18.3.1",
@@ -83,6 +92,7 @@
     "react-router-dom": "^6.26.2",
     "three": "^0.169.0",
     "typescript": "^5.6.2",
-    "vite": "^5.4.8"
+    "vite": "^5.4.8",
+    "vitest": "^2.1.9"
   }
 }

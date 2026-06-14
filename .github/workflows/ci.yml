@@ -1,0 +1,48 @@
+name: CI
+
+# Trust gates for the easy-3dkit library (plan M1): type-check, unit/render
+# tests, build the publishable package, verify the npm tarball contains nothing
+# beyond dist/ + metadata, and dogfood — build the showcase site against the
+# BUILT package so a packaging bug (missing export, broken types, a file left out
+# of the tarball) fails CI instead of shipping. Runs on every push and PR to main.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build package
+        run: pnpm build:pkg
+
+      - name: Pack-contents gate
+        run: pnpm check:pack
+
+      # Dogfood: build the showcase site against the just-built package (dist/),
+      # not the source alias — proving what `npm install easy-3dkit` ships
+      # actually works. Outputs to dist-site/, so it never touches dist/.
+      - name: Verify site against built package
+        run: pnpm verify:dogfood

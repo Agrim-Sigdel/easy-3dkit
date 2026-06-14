@@ -1,5 +1,6 @@
 node_modules
 dist
+dist-site
 dist-ssr
 *.local
 .DS_Store
@@ -9,6 +10,10 @@ dist-ssr
 
 # Packed npm tarballs (produced by `npm pack`)
 *.tgz
+
+# Test artifacts (vitest)
+coverage/
+.vitest/
 
 # Stray probe / scratch dirs that have accidentally landed at the repo root
 /tmp/

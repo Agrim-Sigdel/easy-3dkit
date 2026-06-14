@@ -11,5 +11,5 @@
     "rootDir": "src/lib"
   },
   "include": ["src/lib"],
-  "exclude": []
+  "exclude": ["src/lib/__tests__"]
 }
