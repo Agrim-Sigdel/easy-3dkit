@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { DoubleSide, FrontSide, ShaderMaterial, Vector2, type Mesh } from 'three'
+import { DoubleSide, FrontSide, Vector2, type Mesh } from 'three'
 import { useMouse } from '../hooks/useMouse'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import { STANDARD_SURFACE_UNIFORMS, type SurfaceMaterial } from '../materials/types'
@@ -103,4 +103,3 @@ function cloneUniforms(u: SurfaceMaterial['uniforms']) {
 
 // Re-export so consumers can build custom variants without a deep import.
 export type { SurfaceMaterial }
-export { ShaderMaterial }

@@ -51,13 +51,9 @@ ${hsv2rgb}
       float glow = core * mix(0.25, 1.0, breath);
 
       // Scroll subtly hue-shifts the emissive toward green/blue for depth cueing.
-      vec3 glowHsv = uGlow; // placeholder to satisfy vec3 typing path below
-      vec3 emissive = uGlow * o3s_hsv2rgb(vec3(0.0, 0.0, 1.0)).r; // identity scale (=1.0)
-      emissive = uGlow + uScroll * 0.15 * o3s_hsv2rgb(vec3(0.5, 0.6, 1.0));
-      // discard unused intermediate to keep the compiler honest
-      glowHsv = emissive;
+      vec3 emissive = uGlow + uScroll * 0.15 * o3s_hsv2rgb(vec3(0.5, 0.6, 1.0));
 
-      vec3 col = uBase + glowHsv * glow * uIntensity;
+      vec3 col = uBase + emissive * glow * uIntensity;
       gl_FragColor = vec4(col, 1.0);
     }
   `,
