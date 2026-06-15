@@ -1,6 +1,6 @@
 {
   "name": "easy-3dkit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A reusable library of interactive 3D components for React (R3F + three.js + GSAP)",
   "type": "module",
   "license": "MIT",
@@ -66,8 +66,8 @@
     "check:nextjs": "node scripts/check-nextjs.mjs",
     "verify:dogfood": "E3DK_USE_DIST=1 vite build",
     "changeset": "changeset",
-    "version": "changeset version",
-    "release": "changeset publish",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish",
     "prepublishOnly": "npm run build:pkg"
   },
   "peerDependencies": {

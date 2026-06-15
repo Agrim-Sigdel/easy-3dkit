@@ -17,9 +17,11 @@ creates a markdown file in this folder — commit it with your change.
 ## Releasing (maintainers)
 
 ```bash
-pnpm version    # consume changesets: bump version, update CHANGELOG.md
-pnpm release    # publish to npm (prepublishOnly builds the package first)
+pnpm changeset:version    # consume changesets: bump version, update CHANGELOG.md
+pnpm changeset:publish     # publish to npm (prepublishOnly builds the package first)
 ```
 
-`release` runs `changeset publish`, which invokes `npm publish`; the package's
-`prepublishOnly` script builds `dist/` before the tarball is pushed.
+`changeset:publish` runs `changeset publish`, which invokes `npm publish`; the
+package's `prepublishOnly` script builds `dist/` before the tarball is pushed.
+(The scripts are named `changeset:*` rather than `version`/`release` to avoid
+colliding with pnpm's built-in `version` command.)

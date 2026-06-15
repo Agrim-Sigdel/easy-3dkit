@@ -1,6 +1,6 @@
 {
   "name": "create-easy-3dkit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Scaffold a Vite + React app with easy-3dkit and a working 3D hero.",
   "type": "module",
   "license": "MIT",
