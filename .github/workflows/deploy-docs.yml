@@ -33,12 +33,11 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      # Build under the project subpath so asset URLs resolve on Pages, then add
-      # a SPA fallback so BrowserRouter deep links (e.g. /docs/iridescent) work.
+      # Served from a custom domain (agrimsigdel.com.np) at the root, so the base
+      # path stays '/'. build:site adds the SPA 404 fallback so BrowserRouter deep
+      # links (e.g. /docs/iridescent) resolve. public/CNAME pins the domain.
       - name: Build site
         run: pnpm build:site
-        env:
-          DOCS_BASE: /easy-3dkit/
 
       - uses: actions/upload-pages-artifact@v3
         with:

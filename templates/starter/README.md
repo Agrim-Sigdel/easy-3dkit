@@ -1,7 +1,7 @@
 # easy-3dkit starter
 
 A minimal Vite + React + TypeScript app with a working 3D hero, built on
-[easy-3dkit](https://agrim-sigdel.github.io/easy-3dkit/).
+[easy-3dkit](https://agrimsigdel.com.np/).
 
 ## Run it
 
@@ -23,6 +23,6 @@ Open the printed URL. Edit `src/App.tsx` to change the scene.
 ## Next steps
 
 - Browse every component and copy code from the
-  [docs](https://agrim-sigdel.github.io/easy-3dkit/).
+  [docs](https://agrimsigdel.com.np/).
 - Swap `iridescent` for another material, or add a `<ParticleField>`.
 - Drive the scene from scroll with `useScrollProgress`.

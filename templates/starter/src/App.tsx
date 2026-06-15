@@ -23,7 +23,7 @@ export function App() {
           Edit <code>src/App.tsx</code> to swap the material, add particles, or drive the scene
           from scroll. Everything is a plain React component.
         </p>
-        <a className="cta" href="https://agrim-sigdel.github.io/easy-3dkit/" target="_blank" rel="noreferrer">
+        <a className="cta" href="https://agrimsigdel.com.np/" target="_blank" rel="noreferrer">
           Read the docs
         </a>
       </div>

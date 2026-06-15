@@ -5,15 +5,15 @@ A library of **interactive 3D components** for React, built on
 and [GSAP](https://gsap.com). Drop scroll-reactive surfaces, particle fields,
 instanced layouts, and post-processing into any React site or app.
 
-[**Docs**](https://agrim-sigdel.github.io/easy-3dkit/) ·
-[**Live gallery**](https://agrim-sigdel.github.io/easy-3dkit/gallery) ·
+[**Docs**](https://agrimsigdel.com.np/) ·
+[**Live gallery**](https://agrimsigdel.com.np/gallery) ·
 [**Open in StackBlitz**](https://stackblitz.com/github/Agrim-Sigdel/easy-3dkit/tree/main/templates/starter)
 
 <!-- TODO: add a looping showcase GIF/MP4 here once recorded. The live gallery
      above is the interactive substitute until then. -->
 
 50+ effects across six families — every one has a live, editable preview and a
-copy-paste snippet in the [docs](https://agrim-sigdel.github.io/easy-3dkit/).
+copy-paste snippet in the [docs](https://agrimsigdel.com.np/).
 
 ## Quick start
 
@@ -144,7 +144,7 @@ use. Reproduce the numbers yourself with `pnpm build:pkg && pnpm measure:size`.
 
 ## Examples & guides
 
-- [Docs site](https://agrim-sigdel.github.io/easy-3dkit/) — a live, editable page
+- [Docs site](https://agrimsigdel.com.np/) — a live, editable page
   per component plus guides (install, your first hero, driving from scroll/state,
   Next.js/SSR, WebGL fallback & accessibility, performance & mobile).
 - [`templates/starter`](./templates/starter) — minimal Vite + React app with a

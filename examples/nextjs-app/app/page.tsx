@@ -18,7 +18,7 @@ export default function Page() {
           This headline is server-rendered. The scene behind it is a{' '}
           <code>&apos;use client&apos;</code> island that only mounts in the browser.
         </p>
-        <a className="cta" href="https://agrim-sigdel.github.io/easy-3dkit/">
+        <a className="cta" href="https://agrimsigdel.com.np/">
           Read the docs
         </a>
       </div>
