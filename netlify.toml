@@ -1,0 +1,21 @@
+# Netlify deploy for the easy-3dkit docs/demo site (https://3d-kit.netlify.app).
+#
+# The site is the Vite app (landing + gallery + docs + showcase). It builds to
+# dist-site/ (build:site also writes a 404.html SPA fallback). Served at the
+# root, so the Vite base stays '/'.
+
+[build]
+  command = "pnpm build:site"
+  publish = "dist-site"
+
+[build.environment]
+  # Match the repo's pinned toolchain.
+  NODE_VERSION = "20"
+
+# SPA fallback: the app uses BrowserRouter, so deep links like /docs/iridescent
+# are not real files. Serve index.html for any unmatched path and let the client
+# router resolve it. (Real assets under /assets/* are served before this rule.)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,14 +1,12 @@
 name: Release
 
-# Changesets-driven releases. On push to main, opens (or updates) a "Version
-# Packages" PR that consumes accumulated changesets, bumps the version, and
-# updates CHANGELOG.md. Merging that PR publishes to npm.
-#
-# Requires an NPM_TOKEN secret with publish rights. Until that's set, the publish
-# step is skipped and only the version PR is managed.
+# Changesets-driven releases. Manual-only (workflow_dispatch): publishing is
+# currently done by hand (`pnpm changeset:version` then `npm publish`), so this
+# must NOT auto-run on push or it would race the manual publish. Switch the
+# trigger back to `push: branches: [main]` to automate once an NPM_TOKEN secret
+# with publish rights is set; then merging the "Version Packages" PR publishes.
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: release

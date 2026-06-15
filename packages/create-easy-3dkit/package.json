@@ -10,7 +10,7 @@
     "url": "git+https://github.com/Agrim-Sigdel/easy-3dkit.git",
     "directory": "packages/create-easy-3dkit"
   },
-  "homepage": "https://agrimsigdel.com.np/",
+  "homepage": "https://3d-kit.netlify.app/",
   "keywords": ["easy-3dkit", "create", "starter", "react", "three", "r3f"],
   "bin": {
     "create-easy-3dkit": "index.mjs"

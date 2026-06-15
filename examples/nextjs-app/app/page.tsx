@@ -18,7 +18,7 @@ export default function Page() {
           This headline is server-rendered. The scene behind it is a{' '}
           <code>&apos;use client&apos;</code> island that only mounts in the browser.
         </p>
-        <a className="cta" href="https://agrimsigdel.com.np/">
+        <a className="cta" href="https://3d-kit.netlify.app/">
           Read the docs
         </a>
       </div>

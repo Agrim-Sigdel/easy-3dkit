@@ -29,5 +29,5 @@ hydration errors.
 - `next.config.mjs` lists `easy-3dkit` (and the R3F stack) in
   `transpilePackages` so Next transpiles their modern ESM for both bundles.
 
-See the [Next.js & SSR guide](https://agrimsigdel.com.np/docs/guides/nextjs-ssr)
+See the [Next.js & SSR guide](https://3d-kit.netlify.app/docs/guides/nextjs-ssr)
 for the full pattern.

@@ -23,7 +23,7 @@ export function App() {
           Edit <code>src/App.tsx</code> to swap the material, add particles, or drive the scene
           from scroll. Everything is a plain React component.
         </p>
-        <a className="cta" href="https://agrimsigdel.com.np/" target="_blank" rel="noreferrer">
+        <a className="cta" href="https://3d-kit.netlify.app/" target="_blank" rel="noreferrer">
           Read the docs
         </a>
       </div>

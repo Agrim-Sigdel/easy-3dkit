@@ -1,6 +1,6 @@
 # create-easy-3dkit
 
-Scaffold a Vite + React + TypeScript app with [easy-3dkit](https://agrimsigdel.com.np/)
+Scaffold a Vite + React + TypeScript app with [easy-3dkit](https://3d-kit.netlify.app/)
 and a working 3D hero, ready to `npm install && npm run dev`.
 
 ```bash

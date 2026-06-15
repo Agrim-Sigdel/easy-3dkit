@@ -1,7 +1,7 @@
 # easy-3dkit starter
 
 A minimal Vite + React + TypeScript app with a working 3D hero, built on
-[easy-3dkit](https://agrimsigdel.com.np/).
+[easy-3dkit](https://3d-kit.netlify.app/).
 
 ## Run it
 
@@ -23,6 +23,6 @@ Open the printed URL. Edit `src/App.tsx` to change the scene.
 ## Next steps
 
 - Browse every component and copy code from the
-  [docs](https://agrimsigdel.com.np/).
+  [docs](https://3d-kit.netlify.app/).
 - Swap `iridescent` for another material, or add a `<ParticleField>`.
 - Drive the scene from scroll with `useScrollProgress`.
