@@ -1,6 +1,6 @@
 {
   "name": "easy-3dkit",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A reusable library of interactive 3D components for React (R3F + three.js + GSAP)",
   "type": "module",
   "license": "MIT",

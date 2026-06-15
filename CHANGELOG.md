@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1
+
+### Patch Changes
+
+- Point the package `homepage` at the live docs/demo site
+  (https://3d-kit.netlify.app). No code changes.
+
 ## 0.3.0
 
 ### Minor Changes
