@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/Agrim-Sigdel/easy-3dkit.git"
   },
-  "homepage": "https://github.com/Agrim-Sigdel/easy-3dkit#readme",
+  "homepage": "https://agrim-sigdel.github.io/easy-3dkit/",
   "bugs": {
     "url": "https://github.com/Agrim-Sigdel/easy-3dkit/issues"
   },
@@ -25,13 +25,17 @@
     "gsap"
   ],
   "sideEffects": false,
-  "main": "./dist/easy-3dkit.js",
-  "module": "./dist/easy-3dkit.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/easy-3dkit.js"
+      "import": "./dist/index.js"
+    },
+    "./postprocessing": {
+      "types": "./dist/postprocessing.d.ts",
+      "import": "./dist/postprocessing.js"
     }
   },
   "files": [
@@ -44,6 +48,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:site": "tsc -b && vite build && node scripts/spa-fallback.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run",
@@ -56,7 +61,13 @@
     "build:pkg": "npm run build:lib && npm run build:types",
     "check:pack": "node scripts/check-pack.mjs",
     "measure:size": "node scripts/measure-size.mjs",
-    "verify:dogfood": "O3S_USE_DIST=1 vite build",
+    "sync:starter": "node scripts/sync-starter-template.mjs",
+    "smoke:starter": "node scripts/smoke-starter.mjs",
+    "check:nextjs": "node scripts/check-nextjs.mjs",
+    "verify:dogfood": "E3DK_USE_DIST=1 vite build",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish",
     "prepublishOnly": "npm run build:pkg"
   },
   "peerDependencies": {
@@ -74,6 +85,7 @@
     }
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@react-three/drei": "^9.114.0",
     "@react-three/fiber": "^8.17.10",
     "@react-three/postprocessing": "^2.16.3",

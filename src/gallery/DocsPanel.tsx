@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { type ViewAngle } from '@o3s/lib'
+import { type ViewAngle } from 'easy-3dkit'
 import type { GalleryEntry } from './registry'
 import { buildEffectDoc } from './docsModel'
 import { generateCode, type AnimationValues } from './codegen'

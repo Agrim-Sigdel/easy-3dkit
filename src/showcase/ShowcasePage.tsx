@@ -7,7 +7,6 @@ import {
   InteractiveSurface,
   ParticleField,
   PortalRing,
-  PostFX,
   ScrollAnimator,
   Stage,
   galaxySpiral,
@@ -18,8 +17,9 @@ import {
   type EntranceMode,
   type IdleMode,
   type ViewAngle,
-} from '@o3s/lib'
-import { O3SElement, type O3SConfig } from '../gallery/O3SElement'
+} from 'easy-3dkit'
+import { PostFX } from 'easy-3dkit/postprocessing'
+import { KitElement, type KitConfig } from '../gallery/KitElement'
 import './showcase.css'
 
 /**
@@ -439,9 +439,9 @@ function FamiliesSection() {
   )
 }
 
-// ── 5. Configs (O3SElement) ───────────────────────────────────────
+// ── 5. Configs (KitElement) ───────────────────────────────────────
 
-const CONFIGS: O3SConfig[] = [
+const CONFIGS: KitConfig[] = [
   {
     id: 'bioluminescent',
     family: 'InteractiveSurface',
@@ -464,12 +464,12 @@ function ConfigSection() {
       <SectionHead
         kicker="Configs"
         title="Effects as data."
-        sub="The gallery's Copy JSON button emits a portable config: effect id, params, camera view, animation. O3SElement turns it back into a live scene - swap visuals by editing JSON, not components."
+        sub="The gallery's Copy JSON button emits a portable config: effect id, params, camera view, animation. KitElement turns it back into a live scene - swap visuals by editing JSON, not components."
       />
       <div className="sc-split">
         <div className="sc-stage glass">
           <Stage background={null}>
-            <O3SElement key={index} config={config} />
+            <KitElement key={index} config={config} />
                     <CameraRig view={{ azimuth: 24, elevation: -56, distance: 2 }} />
 
           </Stage>
@@ -490,7 +490,7 @@ function ConfigSection() {
             code={`const config = ${JSON.stringify(config, null, 2)}
 
 <Stage background={null}>
-  <O3SElement config={config} />
+  <KitElement config={config} />
 </Stage>`}
           />
         </div>

@@ -2,6 +2,7 @@ import { useRef, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { type Group } from 'three'
 import { useScrollProgress } from '../hooks/useScrollProgress'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { EASINGS, type EaseName } from '../engine/easing'
 
 export type EntranceMode = 'none' | 'rise' | 'scaleIn' | 'spinIn' | 'dropIn'
@@ -45,6 +46,15 @@ export interface ScrollAnimatorProps {
   idle?: IdleMode
   idleSpeed?: number
   idleAmplitude?: number
+
+  /**
+   * Honor the visitor's `prefers-reduced-motion` setting (default true). When
+   * they request reduced motion, the time-based layers (entrance + idle) are
+   * skipped so nothing moves on its own. Scroll-position channels (rotate, zoom,
+   * lift, parallax, reveal, drift) still respond because they are driven by the
+   * user's own scrolling, not a clock. Set false to force motion regardless.
+   */
+  respectReducedMotion?: boolean
 }
 
 /**
@@ -84,9 +94,12 @@ export function ScrollAnimator({
   idle = 'none',
   idleSpeed = 1,
   idleAmplitude = 0.15,
+  respectReducedMotion = true,
 }: ScrollAnimatorProps) {
   const ref = useRef<Group>(null)
   const progress = useScrollProgress()
+  // When the visitor asks for reduced motion, drop the clock-driven layers.
+  const reduced = usePrefersReducedMotion() && respectReducedMotion
   // Entrance clock starts on the first rendered frame, not at module load, so
   // remounting (e.g. switching effects in the gallery) replays the entrance.
   const startTime = useRef<number | null>(null)
@@ -96,8 +109,9 @@ export function ScrollAnimator({
     if (!g) return
 
     const scrollActive = rotate !== 0 || zoom !== 0 || lift !== 0 || parallax !== 0 || reveal !== 0 || drift !== 0
-    const entranceActive = entrance !== 'none'
-    const idleActive = idle !== 'none'
+    // Time-based layers are suppressed under prefers-reduced-motion.
+    const entranceActive = entrance !== 'none' && !reduced
+    const idleActive = idle !== 'none' && !reduced
     if (!scrollActive && !entranceActive && !idleActive) {
       // Pure passthrough — but reset once in case a channel was just turned off.
       g.position.set(0, 0, 0)

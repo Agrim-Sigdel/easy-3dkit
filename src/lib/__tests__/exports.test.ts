@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import * as lib from '@o3s/lib'
+import * as lib from 'easy-3dkit'
+import * as postLib from 'easy-3dkit/postprocessing'
 
 /**
  * The package boundary contract: everything index.ts claims to export must
@@ -31,13 +32,14 @@ const EXPECTED_EXPORTS = [
   // Hooks
   'useMouse',
   'useScrollProgress',
-  // Components
+  'usePrefersReducedMotion',
+  // Components (PostFX ships from the 'easy-3dkit/postprocessing' subpath; see
+  // the separate suite below)
   'ParticleField',
   'RippleShader',
   'FloatingObject',
   'ScrollScene',
   'ScrollAnimator',
-  'PostFX',
   'InteractiveSurface',
   'InstancedGrid',
   'ShapeGeometry',
@@ -102,5 +104,15 @@ describe('public exports', () => {
       (k) => (lib as Record<string, unknown>)[k] === undefined,
     )
     expect(undefinedKeys).toEqual([])
+  })
+
+  it('does not leak PostFX onto the main entry', () => {
+    expect((lib as Record<string, unknown>).PostFX).toBeUndefined()
+  })
+})
+
+describe('postprocessing subpath exports', () => {
+  it('exports PostFX from easy-3dkit/postprocessing', () => {
+    expect(postLib.PostFX).toBeDefined()
   })
 })

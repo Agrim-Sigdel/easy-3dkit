@@ -27,7 +27,7 @@ export interface StageProps extends Omit<CanvasProps, 'children'> {
  *
  * Wraps R3F's <Canvas> with sensible defaults: color-managed renderer,
  * a clamped device-pixel-ratio for perf, and optional default lighting.
- * Every O3S demo and consuming app mounts components inside a <Stage>.
+ * Every easy-3dkit demo and consuming app mounts components inside a <Stage>.
  *
  * It deliberately knows NOTHING about which components go inside it —
  * that separation is what keeps the library reusable across websites,

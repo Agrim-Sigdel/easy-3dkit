@@ -46,3 +46,23 @@ jobs:
       # actually works. Outputs to dist-site/, so it never touches dist/.
       - name: Verify site against built package
         run: pnpm verify:dogfood
+
+  # Onboarding gates (M6). Heavier (full npm installs of the scaffolded app and
+  # the Next.js example against the packed tarball), so they run as a separate
+  # parallel job.
+  onboarding:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Scaffolder smoke (create-easy-3dkit)
+        run: pnpm smoke:starter
+
+      - name: Next.js example build
+        run: pnpm check:nextjs

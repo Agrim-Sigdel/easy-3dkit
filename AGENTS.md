@@ -66,7 +66,7 @@ Full checklist: `.claude/skills/add-effect/SKILL.md`. In short:
 pnpm install        # this repo uses pnpm
 pnpm dev            # gallery at http://localhost:5173
 pnpm typecheck      # tsc -b --noEmit
-pnpm build:pkg      # build the publishable library (dist/easy-3dkit.js + dist/*.d.ts)
+pnpm build:pkg      # build the publishable library (dist/index.js + dist/postprocessing.js + dist/*.d.ts)
 pnpm smoke          # puppeteer smoke check (needs the dev server running)
 ```
 

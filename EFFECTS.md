@@ -32,7 +32,7 @@ import { Stage, CameraRig, InteractiveSurface, plasma } from 'easy-3dkit'
 </Stage>
 ```
 
-3. **From a config** — paste a Copy JSON blob into `<O3SElement config={...} />`
+3. **From a config** — paste a Copy JSON blob into `<KitElement config={...} />`
    (gallery layer) and it rebuilds the effect with no per-effect wiring.
 
 ### The 6 master families
@@ -1130,7 +1130,9 @@ Full-frame post-processing: `<PostFX {...props} />` as the LAST child of Stage. 
 
 Composable bloom / vignette / grain. Add as the last Stage child.
 
-Import `{ PostFX, FloatingObject, ParticleField }` from `easy-3dkit`.
+Import `{ PostFX }` from `easy-3dkit/postprocessing`.
+
+Import `{ FloatingObject, ParticleField }` from `easy-3dkit`.
 
 **Controls:**
 

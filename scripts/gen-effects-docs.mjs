@@ -25,7 +25,11 @@ const server = await createServer({
 })
 
 try {
-  const lib = await server.ssrLoadModule('/src/lib/index.ts')
+  // The public surface spans the main barrel and the opt-in postprocessing
+  // subpath; codegen identifiers may come from either.
+  const mainLib = await server.ssrLoadModule('/src/lib/index.ts')
+  const postLib = await server.ssrLoadModule('/src/lib/postprocessing.ts')
+  const lib = { ...mainLib, ...postLib }
   const { registry } = await server.ssrLoadModule('/src/gallery/registry.tsx')
   const { buildEffectDoc } = await server.ssrLoadModule('/src/gallery/docsModel.ts')
   const { generateJsx } = await server.ssrLoadModule('/src/gallery/codegen.ts')
@@ -109,7 +113,19 @@ try {
       parts.push('')
       parts.push(doc.description)
       parts.push('')
-      parts.push(`Import \`{ ${[...new Set(importNames)].join(', ')} }\` from \`easy-3dkit\`.`)
+      // PostFX ships from the opt-in postprocessing subpath; any sibling demo
+      // imports (extraImports) still come from the main barrel.
+      const unique = [...new Set(importNames)]
+      if (family === 'PostFX') {
+        const main = unique.filter((n) => n !== 'PostFX')
+        parts.push("Import `{ PostFX }` from `easy-3dkit/postprocessing`.")
+        if (main.length) {
+          parts.push('')
+          parts.push(`Import \`{ ${main.join(', ')} }\` from \`easy-3dkit\`.`)
+        }
+      } else {
+        parts.push(`Import \`{ ${unique.join(', ')} }\` from \`easy-3dkit\`.`)
+      }
       parts.push('')
       if (doc.props.length) {
         parts.push('**Controls:**')
@@ -167,7 +183,7 @@ import { Stage, CameraRig, InteractiveSurface, plasma } from 'easy-3dkit'
 </Stage>
 \`\`\`
 
-3. **From a config** — paste a Copy JSON blob into \`<O3SElement config={...} />\`
+3. **From a config** — paste a Copy JSON blob into \`<KitElement config={...} />\`
    (gallery layer) and it rebuilds the effect with no per-effect wiring.
 
 ### The 6 master families

@@ -16,6 +16,12 @@ export interface PostFXProps {
  *
  * Drop it as the LAST child inside a <Stage> to grade the whole scene.
  * Each effect is conditionally mounted so a 0 prop removes it from the chain.
+ *
+ * Shipped from the `easy-3dkit/postprocessing` subpath, NOT the main entry,
+ * because it depends on the optional `@react-three/postprocessing` peer. Keeping
+ * it off the main barrel means consumers who never use post effects (and haven't
+ * installed that peer) build cleanly — the peer is only pulled in when you import
+ * this subpath.
  */
 export function PostFX({ bloom = 1, bloomThreshold = 0.4, vignette = 0.5, noise = 0 }: PostFXProps) {
   return (

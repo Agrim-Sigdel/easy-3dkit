@@ -2,11 +2,11 @@ import {
   InstancedGrid,
   OceanPlane,
   ParticleField,
-  PostFX,
   Stage,
   cubeSwarm,
   voxelSphere,
-} from '@o3s/lib'
+} from 'easy-3dkit'
+import { PostFX } from 'easy-3dkit/postprocessing'
 
 /**
  * ClayBackdrop — the soft, palette-tinted 3D wash behind the Kiln & Clay site.

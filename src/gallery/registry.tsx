@@ -5,7 +5,6 @@ import {
   RippleShader,
   FloatingObject,
   ScrollScene,
-  PostFX,
   InteractiveSurface,
   InstancedGrid,
   glassmorphism,
@@ -13,7 +12,9 @@ import {
   iridescent,
   orbitLayout,
   type SurfaceMaterial,
-} from '@o3s/lib'
+} from 'easy-3dkit'
+// PostFX is on the opt-in subpath (it pulls in the optional postprocessing peer).
+import { PostFX } from 'easy-3dkit/postprocessing'
 import { geometryGroup, materialGroup, transformGroup } from './controls'
 import { generatedEntries } from './generatedEntries'
 

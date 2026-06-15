@@ -13,15 +13,15 @@ import {
   type EntranceMode,
   type IdleMode,
   type ViewAngle,
-} from '@o3s/lib'
+} from 'easy-3dkit'
 import { registry, type Family } from './gallery/registry'
-import { toO3SConfig, type O3SConfig } from './gallery/O3SElement'
+import { toKitConfig, type KitConfig } from './gallery/KitElement'
 import { levaTheme } from './gallery/levaTheme'
 import { viewGroup, animationGroup } from './gallery/controls'
 import { generateCode, DEFAULT_ANIMATION, type AnimationValues } from './gallery/codegen'
 import { schemaDefaults } from './gallery/schema'
 import { DocsPanel } from './gallery/DocsPanel'
-import { DEFAULT_VIEW } from '@o3s/lib'
+import { DEFAULT_VIEW } from 'easy-3dkit'
 import { OnboardingToast, ShortcutsOverlay } from './gallery/Overlays'
 
 /**
@@ -56,7 +56,7 @@ export default function App() {
   // a stored '0' (user explicitly expanded) overrides that default.
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     try {
-      return localStorage.getItem('o3s.gallery.sidebarCollapsed') !== '0'
+      return localStorage.getItem('easy3dkit.gallery.sidebarCollapsed') !== '0'
     } catch {
       return true
     }
@@ -65,7 +65,7 @@ export default function App() {
     setSidebarCollapsed((c) => {
       const next = !c
       try {
-        localStorage.setItem('o3s.gallery.sidebarCollapsed', next ? '1' : '0')
+        localStorage.setItem('easy3dkit.gallery.sidebarCollapsed', next ? '1' : '0')
       } catch {
         // ignore — persistence is best-effort
       }
@@ -161,30 +161,30 @@ export default function App() {
   }
 
   // "Copy JSON" — serialize the active effect's live leva values (plus any
-  // non-default view/animation) into a portable O3SConfig blob. Paste it into
-  // a site's content file, or straight into <O3SElement config={...} />.
+  // non-default view/animation) into a portable KitConfig blob. Paste it into
+  // a site's content file, or straight into <KitElement config={...} />.
   const [copied, setCopied] = useState(false)
   const copyConfig = async () => {
-    const config = toO3SConfig(active.id, values as Record<string, unknown>, { view, animation })
+    const config = toKitConfig(active.id, values as Record<string, unknown>, { view, animation })
     await writeClipboard(JSON.stringify(config, null, 2))
     setCopied(true)
     window.setTimeout(() => setCopied(false), 1500)
   }
 
   // "Export" — download the active effect's config as a .json file, named by
-  // effect id. Same O3SConfig shape as Copy JSON, just a file instead of clipboard.
+  // effect id. Same KitConfig shape as Copy JSON, just a file instead of clipboard.
   const exportConfig = () => {
-    const config = toO3SConfig(active.id, values as Record<string, unknown>, { view, animation })
+    const config = toKitConfig(active.id, values as Record<string, unknown>, { view, animation })
     const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `${active.id}.o3s.json`
+    a.download = `${active.id}.easy3dkit.json`
     a.click()
     URL.revokeObjectURL(url)
   }
 
-  // "Import" — load an O3SConfig .json and preview it live. If its id matches a
+  // "Import" — load an KitConfig .json and preview it live. If its id matches a
   // known effect we select that effect, then push its params into the leva
   // panel via set() so the controls and the scene both update. Param keys that
   // aren't in the effect's schema are ignored by leva.
@@ -193,7 +193,7 @@ export default function App() {
   const importConfig = async (file: File) => {
     setImportError(null)
     try {
-      const config = JSON.parse(await file.text()) as Partial<O3SConfig>
+      const config = JSON.parse(await file.text()) as Partial<KitConfig>
       const entry = config.id ? registry.find((e) => e.id === config.id) : undefined
       if (!entry) {
         setImportError(`Unknown effect "${config.id ?? '(missing id)'}"`)

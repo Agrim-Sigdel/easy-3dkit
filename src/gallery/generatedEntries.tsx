@@ -44,7 +44,7 @@ import {
   PopupFold,
   type SurfaceMaterial,
   type InstanceLayout,
-} from '@o3s/lib'
+} from 'easy-3dkit'
 import type { Family, GalleryEntry } from './registry'
 
 /* AUTO-GENERATED effect entries (workflow-authored). Each surface uses the

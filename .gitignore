@@ -11,6 +11,10 @@ dist-ssr
 # Packed npm tarballs (produced by `npm pack`)
 *.tgz
 
+# Generated copy of the starter (synced from templates/starter by `pnpm sync:starter`
+# before publishing create-easy-3dkit). templates/starter is the source of truth.
+packages/create-easy-3dkit/template/
+
 # Test artifacts (vitest)
 coverage/
 .vitest/
@@ -26,4 +30,7 @@ o3s-probe/
 .vscode/
 *.swp
 Thumbs.db
-docs/
+
+# Local planning/design docs (root only). Anchored so the app's own src/docs/
+# (the published docs site) is NOT ignored.
+/docs/

@@ -25,12 +25,27 @@ export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      entry: fileURLToPath(new URL('./src/lib/index.ts', import.meta.url)),
+      // Two entries: the main barrel and the opt-in postprocessing subpath.
+      // preserveModules keeps the rest of the graph split for tree-shaking.
+      entry: {
+        index: fileURLToPath(new URL('./src/lib/index.ts', import.meta.url)),
+        postprocessing: fileURLToPath(new URL('./src/lib/postprocessing.ts', import.meta.url)),
+      },
       formats: ['es'],
-      fileName: () => 'easy-3dkit.js',
     },
     rollupOptions: {
       external: isExternal,
+      output: {
+        // Preserve the source module graph instead of one mega-bundle. This is
+        // what makes the package genuinely tree-shakeable AND keeps the optional
+        // @react-three/postprocessing import isolated to PostFX's own chunk — so
+        // a consumer who never imports PostFX (and hasn't installed that optional
+        // peer) builds cleanly. A single-file bundle hoisted that import to the
+        // top of the entry, breaking such consumers.
+        preserveModules: true,
+        preserveModulesRoot: 'src/lib',
+        entryFileNames: '[name].js',
+      },
     },
     // Don't wipe dist before the tsc types pass writes into it (and vice-versa);
     // build:lib runs first so emptying here is fine, but keep it explicit.

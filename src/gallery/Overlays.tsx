@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
  * keyboard wiring itself lives in App.tsx. Kept out of lib/ (gallery-only UI).
  */
 
-const ONBOARDING_KEY = 'o3s.gallery.onboarded'
+const ONBOARDING_KEY = 'easy3dkit.gallery.onboarded'
 
 /** Dismissible first-load hint. Persists its dismissal in localStorage. */
 export function OnboardingToast() {

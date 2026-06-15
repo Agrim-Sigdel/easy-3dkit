@@ -36,11 +36,16 @@ describe('generateCode output', () => {
     },
   )
 
-  it('imports from the public package name, not an internal alias', () => {
+  it('imports from the public package name (or its subpath)', () => {
     for (const entry of registry) {
       const code = generateCode(entry, schemaDefaults(entry.controls))
+      // Every snippet imports from easy-3dkit; PostFX adds the postprocessing
+      // subpath. No internal aliases should ever leak into generated code.
       expect(code).toContain("from 'easy-3dkit'")
-      expect(code).not.toContain('@o3s/lib')
+      expect(code).not.toContain('@o3s')
+      if (entry.family === 'PostFX') {
+        expect(code).toContain("from 'easy-3dkit/postprocessing'")
+      }
     }
   })
 

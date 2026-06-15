@@ -1,12 +1,13 @@
 ---
 name: use-kit
-description: Compose easy-3dkit components into a page or demo site - Stage, CameraRig viewing angles, ScrollAnimator scroll modes and entrance/idle animation, O3SElement configs, and the gallery copy-code workflow. Use when building a website, demo, hero section, or scene WITH the kit (as opposed to adding effects TO the kit).
+description: Compose easy-3dkit components into a page or demo site - Stage, CameraRig viewing angles, ScrollAnimator scroll modes and entrance/idle animation, KitElement configs, and the gallery copy-code workflow. Use when building a website, demo, hero section, or scene WITH the kit (as opposed to adding effects TO the kit).
 ---
 
 # Build with easy-3dkit
 
-In this repo import from `@o3s/lib`; in external projects, from `easy-3dkit`.
-The generated code in the gallery and EFFECTS.md always says `easy-3dkit`.
+Import from `easy-3dkit` (the app aliases this to the local `src/lib` source for
+HMR; external projects resolve the published package). `PostFX` is on the opt-in
+subpath `easy-3dkit/postprocessing`.
 
 ## The skeleton every scene shares
 
@@ -51,7 +52,7 @@ programmatically (that is how the gallery slider works).
 
 ## Configs instead of code
 
-`<O3SElement config={...} />` (gallery layer, `src/gallery/O3SElement.tsx`)
+`<KitElement config={...} />` (gallery layer, `src/gallery/KitElement.tsx`)
 renders a Copy JSON blob `{ id, params, view?, animation? }` inside a Stage.
 It applies `animation` itself; pass `config.view` to your own CameraRig.
 

@@ -82,7 +82,7 @@ export function InteractiveSurface({
 // Prepend the standard-uniform declarations so every variant shader can use
 // uTime/uMouse/uScroll/uResolution without redeclaring them.
 function withHeader(src: string) {
-  return src.includes('// O3S_NO_HEADER') ? src : STANDARD_SURFACE_UNIFORMS + '\n' + src
+  return src.includes('// E3DK_NO_HEADER') ? src : STANDARD_SURFACE_UNIFORMS + '\n' + src
 }
 
 // Shallow-clone a uniform map so two surfaces using the same variant module

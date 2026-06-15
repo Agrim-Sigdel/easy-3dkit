@@ -1,5 +1,5 @@
 /**
- * O3S / 3d-kit — public library surface.
+ * easy-3dkit — public library surface.
  *
  * This file is the package boundary. Everything a consuming app (the gallery,
  * a website, a game) is allowed to import lives here. Keep internals private.
@@ -38,6 +38,7 @@ export {
 // Hooks / primitives (Layer 2)
 export { useMouse } from './hooks/useMouse'
 export { useScrollProgress } from './hooks/useScrollProgress'
+export { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
 
 // Components (Layer 3) — the 6 master families
 export { ParticleField } from './components/ParticleField'
@@ -50,8 +51,9 @@ export { ScrollScene } from './components/ScrollScene'
 export type { ScrollSceneProps } from './components/ScrollScene'
 export { ScrollAnimator } from './components/ScrollAnimator'
 export type { ScrollAnimatorProps, EntranceMode, IdleMode } from './components/ScrollAnimator'
-export { PostFX } from './components/PostFX'
-export type { PostFXProps } from './components/PostFX'
+// PostFX ships from the 'easy-3dkit/postprocessing' subpath (see
+// src/lib/postprocessing.ts) so the main entry never references the optional
+// @react-three/postprocessing peer.
 export { InteractiveSurface } from './components/InteractiveSurface'
 export type { InteractiveSurfaceProps } from './components/InteractiveSurface'
 export { InstancedGrid } from './components/InstancedGrid'

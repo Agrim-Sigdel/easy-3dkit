@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url'
 import { resolve, dirname } from 'node:path'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const entryPkg = resolve(root, 'dist/easy-3dkit.js')
+const entryPkg = resolve(root, 'dist/index.js')
 
 if (!existsSync(entryPkg)) {
   console.error('measure-size: dist/ not found — run `pnpm build:pkg` first.')

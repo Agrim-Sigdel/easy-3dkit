@@ -1,4 +1,4 @@
-import { DEFAULT_VIEW, type EaseName, type EntranceMode, type IdleMode, type ViewAngle } from '@o3s/lib'
+import { DEFAULT_VIEW, type EaseName, type EntranceMode, type IdleMode, type ViewAngle } from 'easy-3dkit'
 import type { GalleryEntry } from './registry'
 import { flattenSchema, type FlatControl } from './schema'
 import { toExportName } from './exportNames'
@@ -214,6 +214,9 @@ export function generateCode(
     for (const n of spec.extraImports ?? []) names.add(n)
   }
   const usesPostFX = names.has('PostFX')
+  // PostFX ships from the 'easy-3dkit/postprocessing' subpath, never the main
+  // barrel — keep it out of the main import and emit a dedicated line for it.
+  if (usesPostFX) names.delete('PostFX')
 
   // ── Body ──
   const innerIndent = hasAnim ? '        ' : '      '
@@ -232,6 +235,7 @@ export function generateCode(
     lines.push(`// npm install ${PEERS}${usesPostFX ? ' @react-three/postprocessing' : ''}`)
   }
   lines.push(`import { ${[...names].join(', ')} } from 'easy-3dkit'`)
+  if (usesPostFX) lines.push(`import { PostFX } from 'easy-3dkit/postprocessing'`)
   lines.push('')
   if (scrollActive) {
     lines.push('// Scroll-driven: the page must be taller than the viewport for')

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { InteractiveSurface, Stage, bioluminescent, heatHaze, voronoiCells } from '@o3s/lib'
+import { InteractiveSurface, Stage, bioluminescent, heatHaze, voronoiCells } from 'easy-3dkit'
 import { StudioBackdrop, type Band, type Theme } from '../studio/StudioBackdrop'
 import {
   COMPONENTS,

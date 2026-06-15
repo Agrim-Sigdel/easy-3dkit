@@ -5,6 +5,27 @@ A library of **interactive 3D components** for React, built on
 and [GSAP](https://gsap.com). Drop scroll-reactive surfaces, particle fields,
 instanced layouts, and post-processing into any React site or app.
 
+[**Docs**](https://agrim-sigdel.github.io/easy-3dkit/) ·
+[**Live gallery**](https://agrim-sigdel.github.io/easy-3dkit/gallery) ·
+[**Open in StackBlitz**](https://stackblitz.com/github/Agrim-Sigdel/easy-3dkit/tree/main/templates/starter)
+
+<!-- TODO: add a looping showcase GIF/MP4 here once recorded. The live gallery
+     above is the interactive substitute until then. -->
+
+50+ effects across six families — every one has a live, editable preview and a
+copy-paste snippet in the [docs](https://agrim-sigdel.github.io/easy-3dkit/).
+
+## Quick start
+
+Scaffold a working app in one command:
+
+```bash
+npm create easy-3dkit@latest my-app
+cd my-app && npm install && npm run dev
+```
+
+Or add it to an existing project (see [Install](#install) below).
+
 ## Install
 
 ```bash
@@ -49,10 +70,15 @@ scroll-override stores for driving effects from your own state.
 
 **Components** (place inside `<Stage>`)
 `InteractiveSurface` · `ParticleField` · `RippleShader` · `FloatingObject` ·
-`ScrollScene` · `PostFX` · `InstancedGrid` · `ShapeGeometry` · `CardFlip` ·
+`ScrollScene` · `InstancedGrid` · `ShapeGeometry` · `CardFlip` ·
 `MagneticGroup` · `SquashStretch` · `ElasticJiggle` · `PathSpline` · `MorphShape` ·
 `ExplodedView` · `ParallaxLayers` · `OceanPlane` · `PortalRing` ·
 `CameraFlythrough` · `PopupFold`
+
+`PostFX` (full-frame post-processing) ships from the opt-in subpath
+`easy-3dkit/postprocessing` — `import { PostFX } from 'easy-3dkit/postprocessing'`
+— because it needs the optional `@react-three/postprocessing` peer. The main
+entry never references that peer, so non-PostFX consumers build without it.
 
 **Surface materials** (pass to `<InteractiveSurface material={...} />`)
 `glassmorphism` · `frostedGlass` · `holographicFoil` · `iridescent` ·
@@ -75,14 +101,15 @@ or a game drives them. Bind page scroll to a 3D transform with `ScrollScene`, or
 read scroll progress yourself:
 
 ```tsx
-import { Stage, ParticleField, PostFX, useScrollProgress } from 'easy-3dkit'
+import { Stage, ParticleField, useScrollProgress } from 'easy-3dkit'
+import { PostFX } from 'easy-3dkit/postprocessing'
 
 function Scene() {
-  const progress = useScrollProgress() // 0 → 1 down the page
+  const progress = useScrollProgress() // ref: 0 → 1 down the page
   return (
     <>
       <ParticleField count={6000} color="#5fa8ff" />
-      <PostFX bloom={1.4 * progress} />
+      <PostFX bloom={1.4 * progress.current} />
     </>
   )
 }
@@ -106,12 +133,39 @@ so it is **not** part of these numbers — they are the library's own footprint.
 
 | Import | Minified | Gzipped |
 | --- | --- | --- |
-| `ParticleField` only | 57.7 KB | 17.3 KB |
-| `InteractiveSurface` + `glassmorphism` | 58.2 KB | 17.4 KB |
-| Whole library (`import *`) | 92.1 KB | 30.4 KB |
+| `ParticleField` only | 1.4 KB | 0.8 KB |
+| `InteractiveSurface` + `glassmorphism` | 4.5 KB | 2.1 KB |
+| `Stage` only | 2.8 KB | 1.5 KB |
+| Whole library (`import *`) | 97.2 KB | 31.7 KB |
 
-A single-component import is roughly half the whole-library cost. Reproduce the
-numbers yourself with `pnpm build:pkg && pnpm measure:size`.
+The package ships as preserved ES modules, so a single-component import costs a
+tiny fraction of the whole-library footprint — the bundler keeps only what you
+use. Reproduce the numbers yourself with `pnpm build:pkg && pnpm measure:size`.
+
+## Examples & guides
+
+- [Docs site](https://agrim-sigdel.github.io/easy-3dkit/) — a live, editable page
+  per component plus guides (install, your first hero, driving from scroll/state,
+  Next.js/SSR, WebGL fallback & accessibility, performance & mobile).
+- [`templates/starter`](./templates/starter) — minimal Vite + React app with a
+  working hero (what `npm create easy-3dkit` emits, also on StackBlitz).
+- [`examples/nextjs-app`](./examples/nextjs-app) — verified Next.js 14 App Router
+  example using the `'use client'` boundary; its `next build` runs in CI.
+
+## Accessibility
+
+- `<Stage>` detects WebGL availability and renders an accessible fallback instead
+  of blanking the page; keep critical text/CTAs outside the canvas as DOM.
+- `<ScrollAnimator>` honors `prefers-reduced-motion` by default (pauses
+  time-based entrance/idle motion). Read the preference yourself with the
+  exported `usePrefersReducedMotion()` hook.
+
+## Releases
+
+Versioning and the changelog are managed with
+[Changesets](https://github.com/changesets/changesets). Contributors run
+`pnpm changeset` to describe a change; releases bump versions and update
+[CHANGELOG.md](./CHANGELOG.md) from the accumulated changesets.
 
 ## License
 

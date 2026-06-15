@@ -1,0 +1,22 @@
+{
+  "name": "create-easy-3dkit",
+  "version": "0.2.0",
+  "description": "Scaffold a Vite + React app with easy-3dkit and a working 3D hero.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Agrim-Sigdel",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Agrim-Sigdel/easy-3dkit.git",
+    "directory": "packages/create-easy-3dkit"
+  },
+  "homepage": "https://agrim-sigdel.github.io/easy-3dkit/",
+  "keywords": ["easy-3dkit", "create", "starter", "react", "three", "r3f"],
+  "bin": {
+    "create-easy-3dkit": "index.mjs"
+  },
+  "files": ["index.mjs", "template"],
+  "engines": {
+    "node": ">=18"
+  }
+}

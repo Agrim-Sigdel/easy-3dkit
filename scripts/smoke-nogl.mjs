@@ -21,6 +21,11 @@ const ROUTES = [
   { path: "/showcase", text: "h1" },
   { path: "/studio", text: "h1" },
   { path: "/gallery", text: ".brand" },
+  // Docs (M5): the shell, a guide, and a per-component page each render real DOM
+  // (headings outside the canvas) and must survive WebGL being unavailable.
+  { path: "/docs", text: "h1" },
+  { path: "/docs/guides/install", text: "h1" },
+  { path: "/docs/iridescent", text: "h1" },
 ]
 
 // Force WebGL off: no GPU, no swiftshader fallback, blocklist honored. This is

@@ -6,12 +6,12 @@ import {
   MagneticGroup,
   OceanPlane,
   ParticleField,
-  PostFX,
   Stage,
   galaxySpiral,
   rainStreaks,
   tunnelLayout,
-} from '@o3s/lib'
+} from 'easy-3dkit'
+import { PostFX } from 'easy-3dkit/postprocessing'
 
 /**
  * StudioBackdrop — the single full-viewport 3D layer behind the whole site.

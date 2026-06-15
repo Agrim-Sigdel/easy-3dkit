@@ -17,7 +17,7 @@ import {
   gearField,
   kineticRing,
   waveGrid,
-} from '@o3s/lib'
+} from 'easy-3dkit'
 import { ClayBackdrop, type ClayTheme } from './ClayBackdrop'
 import { NOTES, PIECES, PROCESS, STATS, VISIT, type Piece } from './content'
 import './clay.css'

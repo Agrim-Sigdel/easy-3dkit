@@ -21,8 +21,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@o3s/lib": ["src/lib/index.ts"],
-      "@o3s/lib/*": ["src/lib/*"]
+      "easy-3dkit": ["src/lib/index.ts"],
+      "easy-3dkit/*": ["src/lib/*"]
     }
   },
   "include": ["src"]
