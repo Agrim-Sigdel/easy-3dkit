@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+
+### Patch Changes
+
+- 0bcde99: fix: update vulnerable dependencies
+
 ## 0.3.1
 
 ### Patch Changes
